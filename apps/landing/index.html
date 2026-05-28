@@ -21,53 +21,112 @@
         }
       };
     </script>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        min-width: 320px;
+        overflow-x: clip;
+        background: #0a1628;
+      }
+
+      section {
+        scroll-margin-top: 5rem;
+      }
+
+      a,
+      button {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      a:focus-visible,
+      button:focus-visible {
+        outline: 3px solid rgba(30, 111, 255, 0.9);
+        outline-offset: 4px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
   </head>
   <body class="bg-navy text-white antialiased">
-    <header class="border-b border-white/10 bg-[#07111F]/90">
-      <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-        <a href="#" class="text-2xl font-black tracking-[0.25em]">WAYPOINT</a>
+    <header class="sticky top-0 z-40 border-b border-white/10 bg-[#07111F]/95 backdrop-blur supports-[padding:max(0px)]:pt-[env(safe-area-inset-top)]">
+      <nav class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+        <a href="#" class="min-w-0 text-xl font-black tracking-[0.2em] sm:text-2xl sm:tracking-[0.25em]">WAYPOINT</a>
         <div class="hidden items-center gap-8 text-sm font-bold text-slate-300 md:flex">
-          <a href="#platform" class="hover:text-white">Platform</a>
-          <a href="#pricing" class="hover:text-white">Pricing</a>
-          <a href="#faq" class="hover:text-white">FAQ</a>
-          <a href="#demo" class="rounded-full bg-blue px-5 py-2 text-white">Request Demo</a>
+          <a href="#platform" class="transition hover:text-white">Platform</a>
+          <a href="#pricing" class="transition hover:text-white">Pricing</a>
+          <a href="#faq" class="transition hover:text-white">FAQ</a>
+          <a href="#demo" class="min-h-11 rounded-full bg-blue px-5 py-3 text-white transition hover:bg-blue/90">Request Demo</a>
         </div>
+        <button
+          class="inline-flex min-h-11 items-center rounded-full border border-white/15 px-4 text-sm font-black text-white md:hidden"
+          type="button"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          data-menu-toggle
+        >
+          Menu
+        </button>
       </nav>
+      <div id="mobile-menu" class="hidden border-t border-white/10 px-4 pb-4 md:hidden" data-mobile-menu>
+        <div class="mx-auto flex max-w-7xl flex-col gap-2 pt-3 text-sm font-bold text-slate-200">
+          <a href="#platform" class="rounded-2xl px-4 py-3 transition hover:bg-white/10">Platform</a>
+          <a href="#pricing" class="rounded-2xl px-4 py-3 transition hover:bg-white/10">Pricing</a>
+          <a href="#faq" class="rounded-2xl px-4 py-3 transition hover:bg-white/10">FAQ</a>
+          <a href="#demo" class="rounded-2xl bg-blue px-4 py-3 text-center text-white">Request Demo</a>
+        </div>
+      </div>
     </header>
 
     <main>
       <section id="demo" class="relative overflow-hidden">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(30,111,255,0.35),transparent_35%)]"></div>
-        <div class="relative mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-[1.1fr_0.9fr] lg:py-32">
+        <div class="relative mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1.05fr)_minmax(22rem,0.95fr)] lg:px-8 lg:py-28 xl:gap-14">
           <div>
-            <p class="mb-6 inline-flex rounded-full border border-blue/40 bg-blue/10 px-4 py-2 text-sm font-black uppercase tracking-[0.2em] text-blue-100">
+            <p class="mb-5 inline-flex max-w-full rounded-full border border-blue/40 bg-blue/10 px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-blue-100 sm:text-sm sm:tracking-[0.2em]">
               Enterprise emergency navigation
             </p>
-            <h1 class="max-w-4xl text-5xl font-black leading-tight tracking-tight md:text-7xl">KNOW YOUR WAY. KNOW YOU'RE SAFE.</h1>
-            <p class="mt-6 max-w-2xl text-xl leading-8 text-slate-300">
+            <h1 class="max-w-4xl text-[clamp(2.45rem,13vw,5rem)] font-black leading-[0.98] tracking-tight sm:text-[clamp(3.5rem,8vw,5.75rem)] lg:text-[clamp(4.5rem,6vw,6.5rem)]">KNOW YOUR WAY. KNOW YOU'RE SAFE.</h1>
+            <p class="mt-5 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg md:text-xl md:leading-8">
               Waypoint gives every employee a real-time compass arrow to the nearest marked exit, backed by facility-grade controls for drills,
               compliance, and incident response.
             </p>
-            <div class="mt-10 flex flex-col gap-4 sm:flex-row">
-              <a href="mailto:sales@waypoint.app" class="rounded-full bg-blue px-8 py-4 text-center font-black text-white shadow-lg shadow-blue/30">
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <a href="mailto:sales@waypoint.app" class="min-h-11 rounded-full bg-blue px-7 py-4 text-center font-black text-white shadow-lg shadow-blue/30 transition hover:bg-blue/90">
                 REQUEST DEMO
               </a>
-              <a href="#pricing" class="rounded-full border border-white/20 px-8 py-4 text-center font-black text-white hover:bg-white/10">
+              <a href="#pricing" class="min-h-11 rounded-full border border-white/20 px-7 py-4 text-center font-black text-white transition hover:bg-white/10">
                 DOWNLOAD BROCHURE
               </a>
             </div>
           </div>
-          <div class="rounded-[2rem] border border-white/10 bg-[#10213A] p-6 shadow-2xl">
-            <div class="rounded-[1.5rem] bg-navy p-8">
-              <div class="mb-8 flex items-center justify-between">
-                <span class="text-sm font-black uppercase tracking-[0.2em] text-blue">Live Evacuation</span>
+          <div class="w-full rounded-[1.5rem] border border-white/10 bg-[#10213A] p-4 shadow-2xl sm:rounded-[2rem] sm:p-6">
+            <div class="rounded-[1.25rem] bg-navy p-4 sm:rounded-[1.5rem] sm:p-8">
+              <div class="mb-6 flex flex-wrap items-center justify-between gap-3 sm:mb-8">
+                <span class="text-xs font-black uppercase tracking-[0.18em] text-blue sm:text-sm sm:tracking-[0.2em]">Live Evacuation</span>
                 <span class="rounded-full bg-red-500 px-3 py-1 text-xs font-black">ACTIVE</span>
               </div>
-              <div class="mx-auto flex h-72 w-72 items-center justify-center rounded-full border-2 border-blue bg-[#10213A]">
-                <div class="h-0 w-0 rotate-45 border-b-[160px] border-l-[48px] border-r-[48px] border-b-green-400 border-l-transparent border-r-transparent"></div>
+              <div class="mx-auto flex aspect-square w-full max-w-[18rem] items-center justify-center rounded-full border-2 border-blue bg-[#10213A]">
+                <div class="h-0 w-0 rotate-45 border-b-[clamp(6.5rem,36vw,10rem)] border-l-[clamp(2rem,11vw,3rem)] border-r-[clamp(2rem,11vw,3rem)] border-b-green-400 border-l-transparent border-r-transparent"></div>
               </div>
-              <div class="mt-8 text-center">
-                <div class="text-4xl font-black">42 m</div>
+              <div class="mt-6 text-center sm:mt-8">
+                <div class="text-[clamp(2rem,10vw,2.5rem)] font-black">42 m</div>
                 <div class="mt-2 text-slate-300">Nearest exit: East Fire Stair</div>
               </div>
             </div>
@@ -75,25 +134,25 @@
         </div>
       </section>
 
-      <section id="platform" class="mx-auto max-w-7xl px-6 py-20">
-        <div class="mb-10 max-w-3xl">
-          <h2 class="text-4xl font-black">Built for civilian emergencies with tactical precision.</h2>
-          <p class="mt-4 text-slate-300">Waypoint turns evacuation plans into live, auditable movement guidance.</p>
+      <section id="platform" class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+        <div class="mb-8 max-w-3xl sm:mb-10">
+          <h2 class="text-[clamp(2rem,8vw,2.5rem)] font-black leading-tight">Built for civilian emergencies with tactical precision.</h2>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">Waypoint turns evacuation plans into live, auditable movement guidance.</p>
         </div>
-        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <article class="rounded-3xl border border-white/10 bg-[#10213A] p-6">
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+          <article class="rounded-3xl border border-white/10 bg-[#10213A] p-5 sm:p-6">
             <h3 class="text-xl font-black">Tactical Precision</h3>
             <p class="mt-3 text-slate-300">Compass-led routing uses GPS first, WiFi triangulation fallback, and last-known bearing continuity.</p>
           </article>
-          <article class="rounded-3xl border border-white/10 bg-[#10213A] p-6">
+          <article class="rounded-3xl border border-white/10 bg-[#10213A] p-5 sm:p-6">
             <h3 class="text-xl font-black">Enterprise-Ready</h3>
             <p class="mt-3 text-slate-300">Manage buildings, floors, exits, and test drills from a centralized facilities dashboard.</p>
           </article>
-          <article class="rounded-3xl border border-white/10 bg-[#10213A] p-6">
+          <article class="rounded-3xl border border-white/10 bg-[#10213A] p-5 sm:p-6">
             <h3 class="text-xl font-black">Compliance & Audit</h3>
             <p class="mt-3 text-slate-300">Track event timing, drill performance, evacuation counts, and historical readiness data.</p>
           </article>
-          <article class="rounded-3xl border border-white/10 bg-[#10213A] p-6">
+          <article class="rounded-3xl border border-white/10 bg-[#10213A] p-5 sm:p-6">
             <h3 class="text-xl font-black">Scalable</h3>
             <p class="mt-3 text-slate-300">Designed for headquarters, hospitals, campuses, government facilities, and distributed retail chains.</p>
           </article>
@@ -101,18 +160,18 @@
       </section>
 
       <section class="border-y border-white/10 bg-[#07111F]">
-        <div class="mx-auto max-w-7xl px-6 py-20">
-          <h2 class="text-4xl font-black">Trusted when seconds matter.</h2>
-          <div class="mt-10 grid gap-6 md:grid-cols-3">
-            <blockquote class="rounded-3xl bg-navy p-6 text-slate-200">
+        <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+          <h2 class="max-w-3xl text-[clamp(2rem,8vw,2.5rem)] font-black leading-tight">Trusted when seconds matter.</h2>
+          <div class="mt-8 grid gap-4 md:grid-cols-3 lg:gap-6">
+            <blockquote class="rounded-3xl bg-navy p-5 text-slate-200 sm:p-6">
               "Waypoint gives our floor wardens a simple, repeatable way to move people toward safety without waiting for radio instructions."
               <footer class="mt-5 font-black text-white">Director of Facilities, Regional Hospital Network</footer>
             </blockquote>
-            <blockquote class="rounded-3xl bg-navy p-6 text-slate-200">
+            <blockquote class="rounded-3xl bg-navy p-5 text-slate-200 sm:p-6">
               "The dashboard turns evacuation planning from a binder exercise into an operational system we can drill, measure, and improve."
               <footer class="mt-5 font-black text-white">Security Operations Lead, Enterprise Campus</footer>
             </blockquote>
-            <blockquote class="rounded-3xl bg-navy p-6 text-slate-200">
+            <blockquote class="rounded-3xl bg-navy p-5 text-slate-200 sm:p-6">
               "Our teams understood the compass interface immediately. That clarity is exactly what we need during high-pressure moments."
               <footer class="mt-5 font-black text-white">Risk Manager, National Retail Group</footer>
             </blockquote>
@@ -120,15 +179,15 @@
         </div>
       </section>
 
-      <section id="pricing" class="mx-auto max-w-7xl px-6 py-20">
-        <div class="mb-10 text-center">
-          <h2 class="text-4xl font-black">Enterprise-first pricing.</h2>
-          <p class="mt-4 text-slate-300">Start with one site. Scale across every facility.</p>
+      <section id="pricing" class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+        <div class="mx-auto mb-8 max-w-3xl text-center sm:mb-10">
+          <h2 class="text-[clamp(2rem,8vw,2.5rem)] font-black leading-tight">Enterprise-first pricing.</h2>
+          <p class="mt-4 text-base leading-7 text-slate-300 sm:text-lg">Start with one site. Scale across every facility.</p>
         </div>
-        <div class="grid gap-6 lg:grid-cols-3">
-          <article class="rounded-3xl border border-white/10 bg-[#10213A] p-8">
+        <div class="grid gap-4 md:grid-cols-3 lg:gap-6">
+          <article class="rounded-3xl border border-white/10 bg-[#10213A] p-6 lg:p-8">
             <h3 class="text-2xl font-black">Core</h3>
-            <div class="mt-4 text-5xl font-black">$199<span class="text-lg text-slate-400">/mo</span></div>
+            <div class="mt-4 text-[clamp(2.5rem,10vw,3rem)] font-black">$199<span class="text-lg text-slate-400">/mo</span></div>
             <ul class="mt-6 space-y-3 text-slate-300">
               <li>Single building command center</li>
               <li>Employee evacuation app</li>
@@ -136,9 +195,9 @@
               <li>Historical drill log</li>
             </ul>
           </article>
-          <article class="rounded-3xl border-2 border-blue bg-[#10213A] p-8 shadow-2xl shadow-blue/20">
+          <article class="rounded-3xl border-2 border-blue bg-[#10213A] p-6 shadow-2xl shadow-blue/20 lg:p-8">
             <h3 class="text-2xl font-black">Professional</h3>
-            <div class="mt-4 text-5xl font-black">$349<span class="text-lg text-slate-400">/mo</span></div>
+            <div class="mt-4 text-[clamp(2.5rem,10vw,3rem)] font-black">$349<span class="text-lg text-slate-400">/mo</span></div>
             <ul class="mt-6 space-y-3 text-slate-300">
               <li>Up to 25 buildings</li>
               <li>Live evacuation monitor</li>
@@ -146,9 +205,9 @@
               <li>Facilities API access</li>
             </ul>
           </article>
-          <article class="rounded-3xl border border-white/10 bg-[#10213A] p-8">
+          <article class="rounded-3xl border border-white/10 bg-[#10213A] p-6 lg:p-8">
             <h3 class="text-2xl font-black">Enterprise</h3>
-            <div class="mt-4 text-5xl font-black">$499<span class="text-lg text-slate-400">/mo</span></div>
+            <div class="mt-4 text-[clamp(2.5rem,10vw,3rem)] font-black">$499<span class="text-lg text-slate-400">/mo</span></div>
             <ul class="mt-6 space-y-3 text-slate-300">
               <li>Unlimited building portfolio</li>
               <li>Dedicated onboarding</li>
@@ -159,26 +218,26 @@
         </div>
       </section>
 
-      <section id="faq" class="mx-auto max-w-4xl px-6 py-20">
-        <h2 class="text-center text-4xl font-black">FAQ</h2>
-        <div class="mt-10 space-y-4">
-          <button class="faq w-full rounded-2xl border border-white/10 bg-[#10213A] p-5 text-left" data-answer="Waypoint uses GPS as the primary signal, WiFi triangulation as a fallback, and the last-known bearing when signal quality drops.">
+      <section id="faq" class="mx-auto max-w-4xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+        <h2 class="text-center text-[clamp(2rem,8vw,2.5rem)] font-black">FAQ</h2>
+        <div class="mt-8 space-y-4 sm:mt-10">
+          <button class="faq min-h-11 w-full rounded-2xl border border-white/10 bg-[#10213A] p-5 text-left transition hover:border-white/20 hover:bg-[#142845]" data-answer="Waypoint uses GPS as the primary signal, WiFi triangulation as a fallback, and the last-known bearing when signal quality drops.">
             <span class="font-black">How does Waypoint guide employees during an evacuation?</span>
             <p class="answer mt-3 hidden text-slate-300"></p>
           </button>
-          <button class="faq w-full rounded-2xl border border-white/10 bg-[#10213A] p-5 text-left" data-answer="Managers mark exits in the mobile app or dashboard, and those coordinates become the targets for compass-based routing.">
+          <button class="faq min-h-11 w-full rounded-2xl border border-white/10 bg-[#10213A] p-5 text-left transition hover:border-white/20 hover:bg-[#142845]" data-answer="Managers mark exits in the mobile app or dashboard, and those coordinates become the targets for compass-based routing.">
             <span class="font-black">How are exits added?</span>
             <p class="answer mt-3 hidden text-slate-300"></p>
           </button>
-          <button class="faq w-full rounded-2xl border border-white/10 bg-[#10213A] p-5 text-left" data-answer="Waypoint is designed for enterprise facilities teams, government buildings, hospitals, large retail chains, and security operations teams.">
+          <button class="faq min-h-11 w-full rounded-2xl border border-white/10 bg-[#10213A] p-5 text-left transition hover:border-white/20 hover:bg-[#142845]" data-answer="Waypoint is designed for enterprise facilities teams, government buildings, hospitals, large retail chains, and security operations teams.">
             <span class="font-black">Who is Waypoint built for?</span>
             <p class="answer mt-3 hidden text-slate-300"></p>
           </button>
-          <button class="faq w-full rounded-2xl border border-white/10 bg-[#10213A] p-5 text-left" data-answer="Pilot deployments use Supabase-backed authentication. Billing is handled through sales-assisted contracts before automated subscription billing is added.">
+          <button class="faq min-h-11 w-full rounded-2xl border border-white/10 bg-[#10213A] p-5 text-left transition hover:border-white/20 hover:bg-[#142845]" data-answer="Pilot deployments use Supabase-backed authentication. Billing is handled through sales-assisted contracts before automated subscription billing is added.">
             <span class="font-black">Does Waypoint include production auth or payments?</span>
             <p class="answer mt-3 hidden text-slate-300"></p>
           </button>
-          <button class="faq w-full rounded-2xl border border-white/10 bg-[#10213A] p-5 text-left" data-answer="Yes. The Professional and Enterprise tiers support multi-building portfolios, analytics, and operational drill workflows.">
+          <button class="faq min-h-11 w-full rounded-2xl border border-white/10 bg-[#10213A] p-5 text-left transition hover:border-white/20 hover:bg-[#142845]" data-answer="Yes. The Professional and Enterprise tiers support multi-building portfolios, analytics, and operational drill workflows.">
             <span class="font-black">Can Waypoint scale across multiple buildings?</span>
             <p class="answer mt-3 hidden text-slate-300"></p>
           </button>
@@ -187,12 +246,12 @@
     </main>
 
     <footer class="border-t border-white/10 bg-[#07111F]">
-      <div class="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-10 md:flex-row md:items-center md:justify-between">
+      <div class="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-10 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
         <div>
-          <div class="font-black tracking-[0.25em]">WAYPOINT</div>
+          <div class="font-black tracking-[0.22em] sm:tracking-[0.25em]">WAYPOINT</div>
           <div class="mt-2 text-sm text-slate-400">Know Your Way. Know You're Safe.</div>
         </div>
-        <div class="flex gap-6 text-sm text-slate-300">
+        <div class="flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-300">
           <a href="#platform">Platform</a>
           <a href="#pricing">Pricing</a>
           <a href="#faq">FAQ</a>

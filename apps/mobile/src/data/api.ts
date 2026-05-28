@@ -37,4 +37,9 @@ export const createExit = async (
   });
 };
 
-export const evacuationSocketUrl = apiUrl.replace(/^http/, "ws") + "/ws";
+const evacuationSocketUrl = apiUrl.replace(/^http/, "ws") + "/ws";
+
+export const getEvacuationSocketUrl = (token: string) => {
+  const separator = evacuationSocketUrl.includes("?") ? "&" : "?";
+  return `${evacuationSocketUrl}${separator}token=${encodeURIComponent(token)}`;
+};

@@ -36,4 +36,9 @@ export const triggerEvacuation = async (buildingId: string, token: string): Prom
   return request<EvacuationEvent>(`/buildings/${buildingId}/evacuate`, token, { method: "POST" });
 };
 
-export const wsUrl = import.meta.env.VITE_WS_URL ?? "ws://localhost:3001/ws";
+const wsUrl = import.meta.env.VITE_WS_URL ?? "ws://localhost:3001/ws";
+
+export const getWsUrl = (token: string) => {
+  const separator = wsUrl.includes("?") ? "&" : "?";
+  return `${wsUrl}${separator}token=${encodeURIComponent(token)}`;
+};

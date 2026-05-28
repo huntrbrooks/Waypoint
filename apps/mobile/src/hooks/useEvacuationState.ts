@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import type { EvacuationStateMessage } from "@waypoint/types";
-import { evacuationSocketUrl } from "@/data/api";
+import { getEvacuationSocketUrl } from "@/data/api";
+import { useAuth } from "@/lib/auth";
 import { useWaypointStore } from "@/store/useWaypointStore";
 
 const isEvacuationMessage = (payload: unknown): payload is EvacuationStateMessage => {
@@ -14,11 +15,17 @@ const isEvacuationMessage = (payload: unknown): payload is EvacuationStateMessag
 };
 
 export const useEvacuationState = () => {
+  const { session } = useAuth();
   const activeEvent = useWaypointStore((state) => state.activeEvent);
   const setActiveEvent = useWaypointStore((state) => state.setActiveEvent);
 
   useEffect(() => {
-    const socket = new WebSocket(evacuationSocketUrl);
+    const token = session?.access_token;
+    if (!token) {
+      return;
+    }
+
+    const socket = new WebSocket(getEvacuationSocketUrl(token));
 
     socket.onmessage = (message) => {
       try {
@@ -39,7 +46,7 @@ export const useEvacuationState = () => {
     };
 
     return () => socket.close();
-  }, [setActiveEvent]);
+  }, [session?.access_token, setActiveEvent]);
 
   return activeEvent;
 };

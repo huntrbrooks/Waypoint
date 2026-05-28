@@ -7,22 +7,17 @@ interface EvacuationMonitorProps {
 }
 
 export const EvacuationMonitor = ({ activeEvent, building }: EvacuationMonitorProps) => {
-  const [evacuated, setEvacuated] = useState(0);
   const [now, setNow] = useState(Date.now());
-  const estimatedUsers = activeEvent?.userCount ?? building.floors * 110;
-
-  useEffect(() => {
-    setEvacuated(0);
-  }, [activeEvent?.id]);
+  const estimatedUsers = activeEvent?.userCount ?? building.employeeCount ?? building.floors * 110;
+  const eventScopePercent = activeEvent && estimatedUsers > 0 ? 100 : 0;
 
   useEffect(() => {
     const interval = window.setInterval(() => {
       setNow(Date.now());
-      setEvacuated((value) => Math.min(estimatedUsers, value + Math.ceil(Math.random() * 18)));
     }, 1000);
 
     return () => window.clearInterval(interval);
-  }, [estimatedUsers]);
+  }, []);
 
   const elapsed = useMemo(() => {
     if (!activeEvent) {
@@ -35,33 +30,33 @@ export const EvacuationMonitor = ({ activeEvent, building }: EvacuationMonitorPr
 
   return (
     <section>
-      <h1 className="text-4xl font-black text-white">Evacuation Monitor</h1>
-      <p className="mt-2 text-slate-300">Live drill telemetry with mock real-time movement.</p>
-      <div className="mt-8 grid gap-6 md:grid-cols-3">
-        <div className="rounded-3xl border border-white/10 bg-[#10213A] p-6">
+      <h1 className="text-3xl font-black text-white sm:text-4xl">Evacuation Monitor</h1>
+      <p className="mt-2 max-w-2xl text-slate-300">Current evacuation event status and affected user scope.</p>
+      <div className="mt-6 grid gap-4 md:grid-cols-3 xl:gap-6">
+        <div className="rounded-3xl border border-white/10 bg-[#10213A] p-5 sm:p-6">
           <div className="text-sm font-bold uppercase tracking-wide text-slate-400">Event status</div>
-          <div className={`mt-4 text-3xl font-black ${activeEvent ? "text-red-300" : "text-green-300"}`}>
+          <div className={`mt-4 text-2xl font-black sm:text-3xl ${activeEvent ? "text-red-300" : "text-green-300"}`}>
             {activeEvent ? "Active" : "Standby"}
           </div>
         </div>
-        <div className="rounded-3xl border border-white/10 bg-[#10213A] p-6">
+        <div className="rounded-3xl border border-white/10 bg-[#10213A] p-5 sm:p-6">
           <div className="text-sm font-bold uppercase tracking-wide text-slate-400">Elapsed time</div>
-          <div className="mt-4 text-3xl font-black text-white">{elapsed}</div>
+          <div className="mt-4 text-2xl font-black text-white sm:text-3xl">{elapsed}</div>
         </div>
-        <div className="rounded-3xl border border-white/10 bg-[#10213A] p-6">
-          <div className="text-sm font-bold uppercase tracking-wide text-slate-400">Evacuated</div>
-          <div className="mt-4 text-3xl font-black text-blue">
-            {evacuated}/{estimatedUsers}
+        <div className="rounded-3xl border border-white/10 bg-[#10213A] p-5 sm:p-6">
+          <div className="text-sm font-bold uppercase tracking-wide text-slate-400">People in scope</div>
+          <div className="mt-4 text-2xl font-black text-blue sm:text-3xl">
+            {activeEvent ? estimatedUsers : 0}
           </div>
         </div>
       </div>
-      <div className="mt-6 rounded-3xl border border-white/10 bg-[#10213A] p-6">
-        <div className="mb-3 flex justify-between text-sm font-bold text-slate-300">
+      <div className="mt-4 rounded-3xl border border-white/10 bg-[#10213A] p-5 sm:mt-6 sm:p-6">
+        <div className="mb-3 flex flex-col gap-1 text-sm font-bold text-slate-300 sm:flex-row sm:justify-between">
           <span>{building.name}</span>
-          <span>{Math.round((evacuated / estimatedUsers) * 100)}%</span>
+          <span>{activeEvent ? "Active event" : "No active event"}</span>
         </div>
         <div className="h-5 overflow-hidden rounded-full bg-navy">
-          <div className="h-full rounded-full bg-blue transition-all" style={{ width: `${Math.min(100, (evacuated / estimatedUsers) * 100)}%` }} />
+          <div className="h-full rounded-full bg-blue transition-all" style={{ width: `${eventScopePercent}%` }} />
         </div>
       </div>
     </section>

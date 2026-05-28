@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import type { User } from "@waypoint/types";
-import { env, hasSupabaseConfig } from "../config/env.js";
+import { env, shouldUseSupabase } from "../config/env.js";
 import { mockRepository, supabaseRepository } from "../db/repository.js";
 import { supabaseAdmin } from "../db/supabase.js";
 
@@ -20,17 +20,34 @@ const extractBearerToken = (authorization?: string) => {
   return authorization.slice("Bearer ".length);
 };
 
+export const authenticateAccessToken = async (token: string | null): Promise<User | null> => {
+  if (!shouldUseSupabase || !supabaseAdmin) {
+    return env.demoMode ? mockRepository.getUser("demo-user") : null;
+  }
+
+  if (!token) {
+    return null;
+  }
+
+  const { data, error } = await supabaseAdmin.auth.getUser(token);
+  if (error || !data.user) {
+    return null;
+  }
+
+  return supabaseRepository.getUser(data.user.id);
+};
+
 export const requireUser = async (request: Request, response: Response, next: NextFunction) => {
   try {
     const token = extractBearerToken(request.header("authorization"));
 
-    if (!hasSupabaseConfig || !supabaseAdmin) {
+    if (!shouldUseSupabase || !supabaseAdmin) {
       if (!env.demoMode) {
         response.status(503).json({ error: "Supabase is not configured" });
         return;
       }
 
-      const demoUser = await mockRepository.getUser("demo-user");
+      const demoUser = await authenticateAccessToken(token);
       if (!demoUser) {
         response.status(500).json({ error: "Demo user is unavailable" });
         return;
@@ -41,20 +58,13 @@ export const requireUser = async (request: Request, response: Response, next: Ne
       return;
     }
 
+    const user = await authenticateAccessToken(token);
     if (!token) {
       response.status(401).json({ error: "Missing Bearer token" });
       return;
     }
-
-    const { data, error } = await supabaseAdmin.auth.getUser(token);
-    if (error || !data.user) {
-      response.status(401).json({ error: "Invalid session" });
-      return;
-    }
-
-    const user = await supabaseRepository.getUser(data.user.id);
     if (!user) {
-      response.status(403).json({ error: "User profile is not provisioned" });
+      response.status(401).json({ error: "Invalid session" });
       return;
     }
 
@@ -65,4 +75,4 @@ export const requireUser = async (request: Request, response: Response, next: Ne
   }
 };
 
-export const currentRepository = () => (hasSupabaseConfig ? supabaseRepository : mockRepository);
+export const currentRepository = () => (shouldUseSupabase ? supabaseRepository : mockRepository);

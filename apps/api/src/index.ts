@@ -4,8 +4,8 @@ import { createServer } from "node:http";
 import { WebSocketServer } from "ws";
 import { z } from "zod";
 import type { EvacuationStateMessage } from "@waypoint/types";
-import { env, hasSupabaseConfig } from "./config/env.js";
-import { currentRepository, requireUser } from "./middleware/auth.js";
+import { env, shouldUseSupabase } from "./config/env.js";
+import { authenticateAccessToken, currentRepository, requireUser } from "./middleware/auth.js";
 import { asyncHandler, handleError } from "./utils/http.js";
 
 const app = express();
@@ -45,7 +45,7 @@ const broadcast = (message: EvacuationStateMessage) => {
 };
 
 app.get("/health", (_request, response) => {
-  response.json({ ok: true, service: "waypoint-api", dataMode: hasSupabaseConfig ? "supabase" : "demo" });
+  response.json({ ok: true, service: "waypoint-api", dataMode: shouldUseSupabase ? "supabase" : "demo" });
 });
 
 app.use(requireUser);
@@ -118,8 +118,21 @@ app.use((error: unknown, _request: express.Request, response: express.Response, 
   handleError(error, response);
 });
 
-wss.on("connection", (socket) => {
-  socket.send(JSON.stringify({ type: "connected", service: "waypoint-api" }));
+wss.on("connection", (socket, request) => {
+  const token = new URL(request.url ?? "/ws", `http://${request.headers.host ?? "localhost"}`).searchParams.get("token");
+
+  void authenticateAccessToken(token)
+    .then((user) => {
+      if (!user) {
+        socket.close(1008, "Unauthorized");
+        return;
+      }
+
+      socket.send(JSON.stringify({ type: "connected", service: "waypoint-api" }));
+    })
+    .catch(() => {
+      socket.close(1011, "Authentication failed");
+    });
 });
 
 server.listen(env.port, () => {

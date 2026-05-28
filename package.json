@@ -7,15 +7,31 @@
     "packages/*"
   ],
   "scripts": {
+    "dev": "concurrently -k -n api,dashboard \"npm:dev:api\" \"npm:dev:dashboard\"",
     "dev:api": "npm --workspace @waypoint/api run dev",
     "dev:dashboard": "npm --workspace @waypoint/dashboard run dev",
     "dev:landing": "npm --workspace @waypoint/landing run dev",
     "dev:mobile": "npm --workspace @waypoint/mobile run start",
     "build": "npm --workspaces --if-present run build",
+    "lint": "eslint . --max-warnings=0",
     "smoke:api": "node scripts/smoke-api.mjs",
     "typecheck": "npm --workspaces --if-present run typecheck"
   },
   "engines": {
     "node": ">=20.0.0"
+  },
+  "overrides": {
+    "@types/react": "19.1.10"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "babel-preset-expo": "^54.0.10",
+    "concurrently": "^9.2.1",
+    "eslint": "^10.4.0",
+    "expo": "54.0.34",
+    "globals": "^17.6.0",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "typescript-eslint": "^8.60.0"
   }
 }

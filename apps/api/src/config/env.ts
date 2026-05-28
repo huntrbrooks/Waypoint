@@ -11,3 +11,4 @@ export const env = {
 };
 
 export const hasSupabaseConfig = Boolean(env.supabaseUrl && env.supabaseServiceRoleKey);
+export const shouldUseSupabase = hasSupabaseConfig && !env.demoMode;
