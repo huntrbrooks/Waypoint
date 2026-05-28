@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "Waypoint",
+    "slug": "waypoint",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "waypoint",
+    "userInterfaceStyle": "dark",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "app.waypoint.mobile"
+    },
+    "android": {
+      "package": "app.waypoint.mobile"
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Waypoint uses location to guide employees to the nearest marked emergency exit."
+        }
+      ]
+    ]
+  }
+}

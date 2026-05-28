@@ -1,0 +1,6 @@
+{
+  "buildCommand": "npm --workspace @waypoint/dashboard run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
+  "framework": "vite"
+}

@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: waypoint-api
+    runtime: node
+    plan: starter
+    rootDir: .
+    buildCommand: npm install && npm --workspace @waypoint/api run build
+    startCommand: npm --workspace @waypoint/api run start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: PORT
+        value: 3001
+      - key: CORS_ORIGINS
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: WAYPOINT_DEMO_MODE
+        value: "false"
