@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Waypoint delivers military-grade precision navigation for civilian emergency evacuations." />
+    <meta name="theme-color" content="#0A1628" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Waypoint | Know Your Way. Know You're Safe.</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -122,8 +124,25 @@
                 <span class="text-xs font-black uppercase tracking-[0.18em] text-blue sm:text-sm sm:tracking-[0.2em]">Live Evacuation</span>
                 <span class="rounded-full bg-red-500 px-3 py-1 text-xs font-black">ACTIVE</span>
               </div>
-              <div class="mx-auto flex aspect-square w-full max-w-[18rem] items-center justify-center rounded-full border-2 border-blue bg-[#10213A]">
-                <div class="h-0 w-0 rotate-45 border-b-[clamp(6.5rem,36vw,10rem)] border-l-[clamp(2rem,11vw,3rem)] border-r-[clamp(2rem,11vw,3rem)] border-b-green-400 border-l-transparent border-r-transparent"></div>
+              <div class="group mx-auto flex aspect-square w-full max-w-[18rem] items-center justify-center rounded-full border-2 border-blue bg-[#10213A]">
+                <svg
+                  class="h-[clamp(7rem,36vw,10rem)] w-[clamp(7rem,36vw,10rem)] rotate-45 text-green-400 drop-shadow-[0_14px_28px_rgba(74,222,128,0.22)] transition duration-300 ease-out group-hover:-translate-y-1 group-hover:opacity-95"
+                  viewBox="0 0 160 160"
+                  fill="none"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path
+                    d="M80 12.5 28.8 135.4c-2.1 5.1 3.3 9.9 8.1 7.2l39.8-22.3a6.8 6.8 0 0 1 6.6 0l39.8 22.3c4.8 2.7 10.2-2.1 8.1-7.2L80 12.5Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M80 25.5 39.4 123l35.2-19.7a11.2 11.2 0 0 1 10.8 0L120.6 123 80 25.5Z"
+                    stroke="rgba(255,255,255,0.28)"
+                    stroke-width="4"
+                    stroke-linejoin="round"
+                  />
+                </svg>
               </div>
               <div class="mt-6 text-center sm:mt-8">
                 <div class="text-[clamp(2rem,10vw,2.5rem)] font-black">42 m</div>

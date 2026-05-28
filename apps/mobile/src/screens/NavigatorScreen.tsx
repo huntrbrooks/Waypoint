@@ -24,7 +24,15 @@ export const NavigatorScreen = () => {
     <View style={[styles.container, { backgroundColor: activeEvent ? "#210B12" : "#0A1628" }]}>
       <Text style={styles.status}>{activeEvent ? "EMERGENCY ROUTE ACTIVE" : "NAVIGATION READY"}</Text>
       <View style={styles.compassRing}>
-        <View style={[styles.arrow, { borderBottomColor: emergencyColor, transform: [{ rotate: `${rotation}deg` }] }]} />
+        <View
+          accessible={false}
+          importantForAccessibility="no-hide-descendants"
+          style={[styles.arrow, { shadowColor: emergencyColor, transform: [{ rotate: `${rotation}deg` }] }]}
+        >
+          <View style={[styles.arrowHead, { borderBottomColor: emergencyColor }]} />
+          <View style={[styles.arrowTail, { backgroundColor: emergencyColor }]} />
+          <View style={styles.arrowHighlight} />
+        </View>
       </View>
       <Text style={styles.exitLabel}>{nearest?.exit.label ?? "No exit marked"}</Text>
       <Text style={styles.distance}>{nearest ? `${Math.round(nearest.distance)} m` : "-- m"}</Text>
@@ -59,13 +67,40 @@ const styles = StyleSheet.create({
     backgroundColor: "#10213A"
   },
   arrow: {
+    width: 116,
+    height: 158,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    shadowOpacity: 0.28,
+    shadowRadius: 18,
+    shadowOffset: { width: 0, height: 10 },
+    elevation: 6
+  },
+  arrowHead: {
+    position: "absolute",
+    top: 0,
     width: 0,
     height: 0,
-    borderLeftWidth: 44,
-    borderRightWidth: 44,
-    borderBottomWidth: 150,
+    borderLeftWidth: 58,
+    borderRightWidth: 58,
+    borderBottomWidth: 116,
     borderLeftColor: "transparent",
     borderRightColor: "transparent"
+  },
+  arrowTail: {
+    position: "absolute",
+    top: 72,
+    width: 34,
+    height: 78,
+    borderRadius: 20
+  },
+  arrowHighlight: {
+    position: "absolute",
+    top: 88,
+    width: 10,
+    height: 46,
+    borderRadius: 999,
+    backgroundColor: "rgba(255, 255, 255, 0.24)"
   },
   exitLabel: {
     color: "#FFFFFF",
